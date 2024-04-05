@@ -5,13 +5,15 @@ body {
 
 .square {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: red;
+  width: 100px;
+  height: 50px;
+  background-image: url("person.png");
+  background-size: cover;
 }
 
 .square.hit {
-  background-color: blue;
+  background-size: cover;
+  background-image: url("dead_person.png");
 }
 
 #score {
@@ -25,7 +27,7 @@ body {
 #player {
   position: absolute;
   width: 70px;
-  height: 90px; /* Adjusted height */
+  height: 90px;
 }
 
 #player_img {
@@ -44,3 +46,4 @@ body {
   height: 100%;
   bottom: 0;
 }
+
