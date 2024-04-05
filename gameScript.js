@@ -9,16 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
     let mouseX = 0;
     let mouseY = 0;
 
+    let collisionActive = true;
+
     function generateSquare() {
         const square = document.createElement('div');
         square.className = 'square';
-        square.style.left = `${Math.random() * (gameArea.width)}px`;
-        square.style.top = `${Math.random() * (gameArea.height)}px`;
-        console.log(gameArea.height);
+        square.style.left = `${Math.random() * (gameArea.width - 20)}px`; // Adjusted to account for square's size
+        square.style.top = `${Math.random() * (gameArea.height - 20)}px`; // Adjusted to account for square's size
         document.body.appendChild(square);
+    }
 
-        setInterval(() => {
-            const playerRect = player.getBoundingClientRect();
+    generateSquare();
+
+    function checkCollision() {
+        if (!collisionActive) return;
+
+        const playerRect = player.getBoundingClientRect();
+        const squares = document.querySelectorAll('.square');
+
+        squares.forEach(square => {
             const squareRect = square.getBoundingClientRect();
 
             if (
@@ -27,15 +36,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 playerRect.top < squareRect.bottom &&
                 playerRect.bottom > squareRect.top
             ) {
+                collisionActive = false;
                 score++;
                 scoreDisplay.textContent = `Score: ${score}`;
-                square.remove();
-                generateSquare();
+                square.classList.add('hit');
+                setTimeout(() => {
+                    square.style.transition = "top 2s";
+                    square.style.top = `${gameArea.height}px`;
+                    setTimeout(() => {
+                        square.remove();
+                        generateSquare();
+                        collisionActive = true;
+                    }, 2000);
+                }, 10);
             }
-        }, 10);
+        });
     }
-
-    generateSquare();
 
     function movePlayer() {
         const playerX = player.offsetLeft + player.offsetWidth / 2;
@@ -58,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             player.style.top = y + 'px';
         }
 
+        checkCollision();
         requestAnimationFrame(movePlayer);
     }
 
@@ -66,5 +83,5 @@ document.addEventListener('DOMContentLoaded', function() {
         mouseY = event.clientY;
     });
 
-    requestAnimationFrame(movePlayer);
+    movePlayer();
 });
