@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const scream_sounds = [scream1, scream2, scream3, scream4, scream5, scream6]
 
         let score = 0;
-        const speedLimit = 6;
+        const speedLimit = 2.5;
         const gameArea = document.getElementById("gameArea").getBoundingClientRect();
     
         let mouseX = 0;
@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let collisionActive = true;
 
         function getRandomElementFromArray(arr) {
-            const randomIndex = Math.floor(Math.random() * arr.length);
+            let randomIndex = Math.floor(Math.random() * arr.length);
             if (randomIndex == 5) {
                 console.log("jeg elsker lekser gambling")
-                const gamble_abesios = Math.floor(Math.random() * 10);
+                const gamble_abesios = Math.floor(Math.random() * 20);
                 if (gamble_abesios == 1) {
                     console.log("oi oi oi")
                 } else {
